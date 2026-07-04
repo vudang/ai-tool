@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>DevForge AI Tools</title>
+    <meta
+      name="description"
+      content="Bang dieu khien tra cuu cong cu AI cho workflow coding hang ngay."
+    />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <a class="brand" href="#top">
+            <span class="brand-mark">DF</span>
+            <span class="brand-copy">
+              <strong>DevForge</strong>
+              <small>v1.0.4-stable</small>
+            </span>
+          </a>
+
+          <a class="button sidebar-cta" href="#tool-detail">+ Tạo Agent Mới</a>
+
+          <nav class="sidebar-nav">
+            <a class="sidebar-link active" href="#top">
+              <span class="sidebar-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                </svg>
+              </span>
+              <span>Dashboard</span>
+            </a>
+            <a class="sidebar-link" href="#library">
+              <span class="sidebar-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4 6h16v12H4z" />
+                  <path d="M8 10h8" />
+                  <path d="M8 14h5" />
+                </svg>
+              </span>
+              <span>Thư viện CLI</span>
+            </a>
+            <a class="sidebar-link" href="#tool-detail">
+              <span class="sidebar-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="4" y="4" width="16" height="16" rx="3" />
+                  <path d="M8 12h8" />
+                  <path d="M12 8v8" />
+                </svg>
+              </span>
+              <span>Agent AI</span>
+            </a>
+            <a class="sidebar-link" href="#workflow">
+              <span class="sidebar-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4 7h7v7H4z" />
+                  <path d="M13 4h7v7h-7z" />
+                  <path d="M13 13h7v7h-7z" />
+                  <path d="M11 10h2v4h-2z" />
+                </svg>
+              </span>
+              <span>Frameworks</span>
+            </a>
+          </nav>
+
+          <div class="sidebar-meta">
+            <a class="sidebar-link sidebar-link-muted" href="#docs">
+              <span class="sidebar-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M7 3h7l5 5v13H7z" />
+                  <path d="M14 3v5h5" />
+                  <path d="M10 13h6" />
+                  <path d="M10 17h6" />
+                </svg>
+              </span>
+              <span>Tài liệu</span>
+            </a>
+            <a class="sidebar-link sidebar-link-muted" href="./README.md" target="_blank" rel="noreferrer">
+              <span class="sidebar-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2.3-2.5 4" />
+                  <path d="M12 17h.01" />
+                </svg>
+              </span>
+              <span>Hỗ trợ</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <main class="workspace" id="top">
+        <section class="hero-panel">
+          <div class="hero-copy">
+            <h1>Trung tâm Công cụ AI của Tôi</h1>
+            <p>
+              Quản lý, tìm kiếm và kích hoạt các công cụ dòng lệnh, agent và framework
+              được tối ưu hóa cho quy trình phát triển hằng ngày.
+            </p>
+          </div>
+        </section>
+
+        <section class="control-panel">
+          <label class="search-box">
+            <span class="search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                <circle cx="11" cy="11" r="6" />
+                <path d="M20 20l-4.2-4.2" />
+              </svg>
+            </span>
+            <input
+              id="search-input"
+              type="search"
+              placeholder="Tìm kiếm công cụ..."
+            />
+          </label>
+          <div class="filter-row" id="filter-row"></div>
+        </section>
+
+        <section class="stats-row" id="result-summary"></section>
+
+        <section class="library-panel" id="library">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Library</p>
+              <h2>Thư viện lệnh CLI & cheatsheets</h2>
+            </div>
+            <p class="section-status" id="library-status"></p>
+          </div>
+
+          <div class="tool-grid" id="tool-grid"></div>
+        </section>
+
+        <section class="detail-panel" id="tool-detail">
+          <div id="selected-tool-view"></div>
+        </section>
+
+        <div class="lower-grid">
+          <section class="module-panel" id="workflow">
+            <div class="section-head compact">
+              <div>
+                <p class="section-label">Workflow</p>
+                <h2>Nhịp vận hành để không mất context giữa các tool</h2>
+              </div>
+              <p>
+                Playbook ngắn để chọn host, nạp context, bật skill và khép vòng lặp sau
+                khi hoàn thành task.
+              </p>
+            </div>
+            <div class="workflow-grid" id="workflow-grid"></div>
+          </section>
+
+          <section class="module-panel" id="docs">
+            <div class="section-head compact">
+              <div>
+                <p class="section-label">Docs</p>
+                <h2>Bộ tài liệu bàn giao cho agent tiếp theo</h2>
+              </div>
+              <p>
+                Giữ repo dễ tiếp quản: source of truth cho data, shell UI và các quy tắc
+                cập nhật đều nằm ở đây.
+              </p>
+            </div>
+            <div class="docs-grid" id="docs-grid"></div>
+          </section>
+        </div>
+
+        <footer class="site-footer">
+          <p>© 2026 DevForge AI. Dashboard tĩnh cho workflow coding thực dụng.</p>
+          <div class="footer-links">
+            <a href="./DESIGN.md" target="_blank" rel="noreferrer">DESIGN</a>
+            <a href="./README.md" target="_blank" rel="noreferrer">README</a>
+            <a href="./AGENTS.md" target="_blank" rel="noreferrer">AGENTS</a>
+            <a href="./CLAUDE.md" target="_blank" rel="noreferrer">CLAUDE</a>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <div aria-live="polite" class="toast hidden" id="toast"></div>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
