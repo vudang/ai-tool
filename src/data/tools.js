@@ -541,6 +541,66 @@ export const tools = [
     ]
   },
   {
+    id: "ponytail",
+    name: "ponytail",
+    host: "Dietrich Gebert",
+    category: "skills",
+    cadence: "Khi agent hay overbuild",
+    priority: "standard",
+    accent: "orange",
+    summary:
+      "Plugin/skill pack ép coding agent nghĩ như một senior lười đúng chỗ: bỏ cái không cần, reuse cái sẵn có, ưu tiên stdlib và native platform trước khi viết thêm code.",
+    bestFor: "Giảm overengineering, giữ diff nhỏ, chọn giải pháp native và vẫn không cắt safety rails.",
+    sourceUrl: "https://github.com/DietrichGebert/ponytail",
+    highlights: [
+      "Dùng một ladder rất rõ: skip nếu không cần, reuse nếu đã có, rồi mới đến stdlib, native feature, dependency và code mới.",
+      "Có mode `lite`, `full`, `ultra`, hook kích hoạt mỗi session và slash commands để đổi mức độ can thiệp.",
+      "README công bố benchmark trên Claude Code thật: ít code hơn, rẻ hơn, nhanh hơn mà vẫn giữ đủ guard về validation, security và accessibility."
+    ],
+    quickCommands: [
+      {
+        label: "Add marketplace cho Codex",
+        command: "codex plugin marketplace add DietrichGebert/ponytail",
+        note: "Thêm nguồn plugin trước khi mở menu plugin trong Codex."
+      },
+      {
+        label: "Cài trong Codex",
+        command: "/plugins",
+        note: "Mở plugin picker, chọn marketplace Ponytail rồi install."
+      },
+      {
+        label: "Trust lifecycle hooks",
+        command: "/hooks",
+        note: "Review và trust 2 hook của Ponytail rồi mở thread mới để ruleset chạy luôn."
+      },
+      {
+        label: "Bật chế độ gắt hơn",
+        command: "/ponytail ultra",
+        note: "Dùng khi agent có xu hướng dựng thêm abstraction, wrapper hoặc dependency không cần."
+      },
+      {
+        label: "Review diff theo kiểu Ponytail",
+        command: "/ponytail-review",
+        note: "Hữu ích để soi chỗ nào còn thừa lớp, thừa package hoặc bỏ lỡ native feature."
+      }
+    ],
+    keywords: ["overengineering", "yagni", "native feature", "minimal diff", "hooks", "lite", "full", "ultra"],
+    useCases: [
+      {
+        title: "Chặn dependency thừa",
+        description: "Thay vì cài thêm date picker hoặc color picker package, Ponytail đẩy agent kiểm tra native `<input>` và browser capability trước."
+      },
+      {
+        title: "Giữ refactor ở mức tối thiểu",
+        description: "Khi sửa bug nhỏ trong codebase lớn, Ponytail giúp agent tránh biến task thành cuộc đại tu component, service hay abstraction."
+      },
+      {
+        title: "Review lại diff sau khi code xong",
+        description: "Chạy review mode để tìm các phần còn verbose, wrapper không cần thiết hoặc chỗ đáng lẽ chỉ cần reuse code sẵn có."
+      }
+    ]
+  },
+  {
     id: "superpowers",
     name: "superpowers",
     host: "obra",
@@ -602,7 +662,7 @@ export const workflowSteps = [
   {
     title: "3. Siết workflow bằng skills",
     body:
-      "Khi muốn agent code gọn, bớt đoán và có plan rõ, đưa karpathy-skills, superpowers hoặc agent-skills vào session. Mục tiêu là làm agent đi đúng nhịp, không chỉ trả lời hay."
+      "Khi muốn agent code gọn, bớt đoán và có plan rõ, đưa ponytail, karpathy-skills, superpowers hoặc agent-skills vào session. Mục tiêu là làm agent đi đúng nhịp, không chỉ trả lời hay."
   },
   {
     title: "4. Review và tối ưu vòng lặp",
