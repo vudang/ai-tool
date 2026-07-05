@@ -1,9 +1,29 @@
-import { categories, docsGuide, tools, workflowSteps } from "./data/tools.js";
+import { categories, tools } from "./data/tools.js";
+
+const HOME_COPY = {
+  title: "Trung tâm Công cụ AI của Tôi",
+  description:
+    "Quản lý, tìm kiếm và kích hoạt các công cụ dòng lệnh, agent và framework được tối ưu hóa cho quy trình phát triển hằng ngày."
+};
+
+const DETAIL_COPY = {
+  title: "Thư viện Lệnh CLI & Cheatsheets",
+  description:
+    "Khám phá và quản lý các công cụ dòng lệnh được tích hợp sẵn. Lựa chọn công cụ để xem chi tiết tính năng và bảng lệnh tham khảo nhanh."
+};
+
+const uiCategories = [
+  { id: "all", label: "Tất cả" },
+  { id: "cli", label: "CLI Tools" },
+  { id: "agents", label: "Agents" },
+  { id: "frameworks", label: "Frameworks" }
+];
 
 const state = {
   query: "",
   category: "all",
-  selectedToolId: getInitialToolId()
+  selectedToolId: getInitialToolId(),
+  view: getInitialView()
 };
 
 const categoryDisplayLabels = {
@@ -12,7 +32,9 @@ const categoryDisplayLabels = {
   context: "Context",
   skills: "Skills",
   automation: "Automation",
-  "multi-agent": "Agents"
+  "multi-agent": "Agents",
+  agents: "Agents",
+  frameworks: "Frameworks"
 };
 
 const iconMap = {
@@ -59,9 +81,15 @@ const resultSummary = document.querySelector("#result-summary");
 const libraryStatus = document.querySelector("#library-status");
 const toolGrid = document.querySelector("#tool-grid");
 const selectedToolView = document.querySelector("#selected-tool-view");
-const workflowGrid = document.querySelector("#workflow-grid");
-const docsGrid = document.querySelector("#docs-grid");
 const toast = document.querySelector("#toast");
+const heroTitle = document.querySelector("#hero-title");
+const heroDescription = document.querySelector("#hero-description");
+const contentStage = document.querySelector("#content-stage");
+const libraryPanel = document.querySelector("#library");
+const detailPanel = document.querySelector("#tool-detail");
+const libraryHead = document.querySelector("#library-head");
+const navDashboard = document.querySelector("#nav-dashboard");
+const navLibrary = document.querySelector("#nav-library");
 
 function normalize(value) {
   return value
@@ -83,30 +111,42 @@ function showToast(message) {
   }, 1800);
 }
 
-function getInitialToolId() {
-  const hashId = readToolIdFromHash();
-  return tools.some((tool) => tool.id === hashId) ? hashId : tools[0]?.id ?? null;
-}
-
-function readToolIdFromHash() {
+function readRouteFromHash() {
   const match = window.location.hash.match(/^#tool=([\w-]+)$/);
-  return match?.[1] ?? null;
-}
 
-function writeToolIdToHash(toolId) {
-  const nextHash = toolId ? `#tool=${toolId}` : "#top";
-
-  if (window.location.hash === nextHash) {
-    return;
+  if (!match) {
+    return { view: "home", toolId: null };
   }
 
-  history.replaceState(null, "", nextHash);
+  return { view: "detail", toolId: match[1] };
 }
 
-function selectTool(toolId) {
+function getInitialView() {
+  return readRouteFromHash().view;
+}
+
+function getInitialToolId() {
+  const { toolId } = readRouteFromHash();
+  return tools.some((tool) => tool.id === toolId) ? toolId : tools[0]?.id ?? null;
+}
+
+function writeRouteToHash() {
+  const nextHash = state.view === "detail" && state.selectedToolId
+    ? `#tool=${state.selectedToolId}`
+    : "#top";
+
+  if (window.location.hash !== nextHash) {
+    history.replaceState(null, "", nextHash);
+  }
+}
+
+function openToolDetail(toolId) {
+  state.category = "all";
   state.selectedToolId = toolId;
-  writeToolIdToHash(toolId);
+  state.view = "detail";
+  writeRouteToHash();
   renderApp();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function getCategoryLabel(categoryId) {
@@ -119,7 +159,7 @@ function getFilteredTools() {
   const query = normalize(state.query);
 
   return tools.filter((tool) => {
-    const inCategory = state.category === "all" || tool.category === state.category;
+    const inCategory = matchesUiCategory(tool, state.category);
     if (!inCategory) {
       return false;
     }
@@ -146,23 +186,45 @@ function getFilteredTools() {
   });
 }
 
+function matchesUiCategory(tool, categoryId) {
+  if (categoryId === "all") {
+    return true;
+  }
+
+  if (categoryId === "cli") {
+    return tool.category === "cli";
+  }
+
+  if (categoryId === "agents") {
+    return tool.category === "context" || tool.category === "multi-agent";
+  }
+
+  if (categoryId === "frameworks") {
+    return tool.category === "skills" || tool.category === "automation";
+  }
+
+  return tool.category === categoryId;
+}
+
 function syncSelectedTool(filteredTools) {
   if (!filteredTools.length) {
     state.selectedToolId = null;
-    writeToolIdToHash(null);
+    if (state.view === "detail") {
+      state.view = "home";
+      writeRouteToHash();
+    }
     return null;
   }
 
   const allowedIds = new Set(filteredTools.map((tool) => tool.id));
-  const hashId = readToolIdFromHash();
 
-  if (hashId && allowedIds.has(hashId)) {
-    state.selectedToolId = hashId;
-  } else if (!state.selectedToolId || !allowedIds.has(state.selectedToolId)) {
+  if (!state.selectedToolId || !allowedIds.has(state.selectedToolId)) {
     state.selectedToolId = filteredTools[0].id;
+    if (state.view === "detail") {
+      writeRouteToHash();
+    }
   }
 
-  writeToolIdToHash(state.selectedToolId);
   return filteredTools.find((tool) => tool.id === state.selectedToolId) ?? filteredTools[0];
 }
 
@@ -189,8 +251,87 @@ function getToolMetrics(selectedTool, filteredTools) {
   ];
 }
 
+function getSourceActionLabel(sourceUrl) {
+  return sourceUrl.includes("github.com") ? "Xem trên GitHub" : "Xem docs";
+}
+
+function getPrimaryActionLabel(tool) {
+  const firstLabel = normalize(tool.quickCommands[0]?.label ?? "");
+  return firstLabel.includes("cai") || firstLabel.includes("install")
+    ? "Cài đặt ngay"
+    : "Copy lệnh mở đầu";
+}
+
+function getToolHandle(tool) {
+  try {
+    const url = new URL(tool.sourceUrl);
+
+    if (url.hostname.includes("github.com")) {
+      return url.pathname.replace(/^\/+/, "").split("/").slice(0, 2).join("/");
+    }
+
+    return `${tool.host} / ${url.hostname.replace(/^www\./, "")}`;
+  } catch {
+    return `${tool.host} / ${tool.id}`;
+  }
+}
+
+function getToolBadges(tool) {
+  return [
+    getCategoryLabel(tool.category),
+    tool.priority === "featured" ? "Featured" : tool.cadence
+  ];
+}
+
+function getQuickInfo(selectedTool) {
+  return [
+    {
+      label: "Host",
+      value: selectedTool.host
+    },
+    {
+      label: "Nhóm",
+      value: getCategoryLabel(selectedTool.category)
+    },
+    {
+      label: "Dùng khi",
+      value: selectedTool.cadence
+    }
+  ];
+}
+
+function updateShell(selectedTool, filteredTools) {
+  const isDetail = state.view === "detail";
+  const copy = isDetail ? DETAIL_COPY : HOME_COPY;
+
+  document.body.classList.toggle("route-detail", isDetail);
+  document.body.classList.toggle("route-home", !isDetail);
+
+  heroTitle.textContent = copy.title;
+  heroDescription.textContent = copy.description;
+
+  filterRow.hidden = isDetail;
+  resultSummary.hidden = isDetail;
+  libraryPanel.hidden = isDetail;
+  detailPanel.hidden = !isDetail;
+  contentStage.classList.toggle("detail-mode", isDetail);
+  libraryPanel.classList.toggle("detail-aside", isDetail);
+  detailPanel.classList.toggle("detail-card-panel", isDetail);
+  libraryHead.hidden = isDetail;
+
+  navDashboard.classList.toggle("active", !isDetail);
+  navLibrary.classList.toggle("active", isDetail);
+  navLibrary.setAttribute("href", isDetail && selectedTool ? `#tool=${selectedTool.id}` : "#library");
+
+  libraryStatus.textContent = isDetail
+    ? `${filteredTools.length} tool`
+    : selectedTool
+      ? `Đang xem: ${selectedTool.name}`
+      : "Không có tool nào khớp bộ lọc hiện tại";
+}
+
 function renderFilters() {
-  filterRow.innerHTML = categories
+  filterRow.innerHTML = uiCategories
     .map(
       (category) => `
         <button
@@ -198,7 +339,7 @@ function renderFilters() {
           type="button"
           data-category="${category.id}"
         >
-          ${getCategoryLabel(category.id)}
+          ${category.label}
         </button>
       `
     )
@@ -223,13 +364,9 @@ function renderOverview(filteredTools, selectedTool) {
       `
     )
     .join("");
-
-  libraryStatus.textContent = selectedTool
-    ? `Đang xem: ${selectedTool.name}`
-    : "Không có tool nào khớp bộ lọc hiện tại";
 }
 
-function renderToolGrid(filteredTools, selectedTool) {
+function renderHomeToolGrid(filteredTools, selectedTool) {
   if (!filteredTools.length) {
     toolGrid.innerHTML = `
       <article class="empty-state">
@@ -241,33 +378,34 @@ function renderToolGrid(filteredTools, selectedTool) {
     return;
   }
 
+  toolGrid.className = "tool-grid";
   toolGrid.innerHTML = filteredTools
     .map(
       (tool) => `
         <button
-          class="tool-card ${selectedTool?.id === tool.id ? "active" : ""}"
+          class="tool-card"
           type="button"
           data-tool-id="${tool.id}"
           data-accent="${tool.accent}"
           data-priority="${tool.priority}"
-          aria-pressed="${selectedTool?.id === tool.id ? "true" : "false"}"
+          aria-pressed="false"
         >
           <div class="tool-card-frame">
-            <div class="tool-card-head">
-              <span class="tool-card-icon" aria-hidden="true">
-                ${iconMap[tool.category] ?? iconMap.cli}
-              </span>
-              <span class="tool-card-host">${tool.host}</span>
+            <div class="tool-card-titleline">
+              <span class="tool-card-dot" aria-hidden="true"></span>
+              <h3>${tool.name}</h3>
             </div>
 
             <div class="tool-card-copy">
-              <h3>${tool.name}</h3>
               <p>${tool.summary}</p>
             </div>
 
             <div class="tool-card-tags">
-              <span class="tool-tag">${getCategoryLabel(tool.category)}</span>
-              <span class="tool-tag muted">${tool.priority === "featured" ? "Featured" : tool.cadence}</span>
+              ${getToolBadges(tool)
+                .map((badge, index) => `
+                  <span class="tool-tag ${index === 0 ? "home-tag-accent" : "muted"}">${badge}</span>
+                `)
+                .join("")}
             </div>
           </div>
         </button>
@@ -277,229 +415,174 @@ function renderToolGrid(filteredTools, selectedTool) {
 
   toolGrid.querySelectorAll("[data-tool-id]").forEach((button) => {
     button.addEventListener("click", () => {
-      selectTool(button.dataset.toolId);
-      document.querySelector("#tool-detail")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      openToolDetail(button.dataset.toolId);
     });
   });
 }
 
-function getSourceActionLabel(sourceUrl) {
-  return sourceUrl.includes("github.com") ? "Xem trên GitHub" : "Xem docs";
+function renderDetailToolList(filteredTools, selectedTool) {
+  if (!filteredTools.length) {
+    toolGrid.innerHTML = `
+      <article class="empty-state detail-list-empty">
+        <p class="section-label">No results</p>
+        <h3>Không có tool phù hợp</h3>
+        <p>Hãy thử keyword ngắn hơn để mở lại detail list.</p>
+      </article>
+    `;
+    return;
+  }
+
+  toolGrid.className = "tool-list-stack";
+  toolGrid.innerHTML = filteredTools
+    .map(
+      (tool) => `
+        <button
+          class="detail-tool-card ${selectedTool?.id === tool.id ? "active" : ""}"
+          type="button"
+          data-tool-id="${tool.id}"
+          data-accent="${tool.accent}"
+          aria-pressed="${selectedTool?.id === tool.id ? "true" : "false"}"
+        >
+          <div class="detail-tool-head">
+            <span class="detail-tool-icon" aria-hidden="true">
+              ${iconMap[tool.category] ?? iconMap.cli}
+            </span>
+            <h3>${tool.name}</h3>
+          </div>
+          <p>${tool.summary}</p>
+          <div class="detail-tool-badges">
+            ${getToolBadges(tool).map((badge, index) => `
+              <span class="detail-badge ${index === 1 ? "detail-badge-accent" : ""}">${badge}</span>
+            `).join("")}
+          </div>
+        </button>
+      `
+    )
+    .join("");
+
+  toolGrid.querySelectorAll("[data-tool-id]").forEach((button) => {
+    button.addEventListener("click", () => {
+      openToolDetail(button.dataset.toolId);
+    });
+  });
 }
 
-function getPrimaryActionLabel(tool) {
-  const firstLabel = normalize(tool.quickCommands[0]?.label ?? "");
-  return firstLabel.includes("cai") || firstLabel.includes("install")
-    ? "Cài đặt ngay"
-    : "Copy lệnh mở đầu";
-}
+function renderToolGrid(filteredTools, selectedTool) {
+  if (state.view === "detail") {
+    toolGrid.innerHTML = "";
+    return;
+  }
 
-function buildCommandBundle(tool) {
-  return tool.quickCommands
-    .map((item) => `# ${item.label}\n${item.command}\n# ${item.note}`)
-    .join("\n\n");
+  renderHomeToolGrid(filteredTools, selectedTool);
 }
 
 function renderSelectedTool(selectedTool, filteredTools) {
+  if (state.view !== "detail") {
+    selectedToolView.innerHTML = "";
+    return;
+  }
+
   if (!selectedTool) {
     selectedToolView.innerHTML = `
       <div class="empty-state detail-empty">
-        <p class="section-label">Inspector</p>
+        <p class="section-label">Detail</p>
         <h3>Chưa có tool nào để hiển thị</h3>
-        <p>Query hiện tại không trả về kết quả. Hãy đổi bộ lọc để mở lại inspector.</p>
+        <p>Bộ lọc hiện tại không còn tool nào trong detail route.</p>
       </div>
     `;
     return;
   }
 
-  const relatedTools = tools
-    .filter((tool) => tool.id !== selectedTool.id && tool.category === selectedTool.category)
-    .slice(0, 3);
   const firstCommand = selectedTool.quickCommands[0]?.command ?? "";
-  const allCommands = buildCommandBundle(selectedTool);
 
   selectedToolView.innerHTML = `
-    <article class="inspector-shell" data-accent="${selectedTool.accent}">
-      <div class="inspector-ribbon"></div>
+    <article class="tool-detail-shell" data-accent="${selectedTool.accent}">
+      <div class="tool-detail-ribbon"></div>
 
-      <div class="inspector-header">
-        <div class="inspector-tool">
-          <span class="inspector-icon" aria-hidden="true">
-            ${iconMap[selectedTool.category] ?? iconMap.cli}
-          </span>
-          <div>
-            <h2>${selectedTool.name}</h2>
-            <p>${selectedTool.host} / ${getCategoryLabel(selectedTool.category)} / ${selectedTool.cadence}</p>
-          </div>
-        </div>
-
-        <div class="inspector-actions">
-          <a class="button secondary" href="${selectedTool.sourceUrl}" target="_blank" rel="noreferrer">
-            ${getSourceActionLabel(selectedTool.sourceUrl)}
-          </a>
-          <button
-            class="button primary"
-            type="button"
-            data-copy="${encodeURIComponent(firstCommand)}"
-          >
-            ${getPrimaryActionLabel(selectedTool)}
-          </button>
-        </div>
-      </div>
-
-      <div class="inspector-grid">
-        <article class="panel-card">
-          <p class="panel-kicker">Tính năng nổi bật</p>
-          <ul class="feature-list">
-            ${selectedTool.highlights.map((item) => `<li>${item}</li>`).join("")}
-          </ul>
-        </article>
-
-        <article class="panel-card">
-          <p class="panel-kicker">Thông tin nhanh</p>
-          <div class="meta-stack">
-            <div class="meta-row">
-              <span>Best for</span>
-              <strong>${selectedTool.bestFor}</strong>
-            </div>
-            <div class="meta-row">
-              <span>Host</span>
-              <strong>${selectedTool.host}</strong>
-            </div>
-            <div class="meta-row">
-              <span>Category</span>
-              <strong>${getCategoryLabel(selectedTool.category)}</strong>
-            </div>
-            <div class="meta-row">
-              <span>Kết quả hiện tại</span>
-              <strong>${filteredTools.length} tool</strong>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <section class="terminal-panel">
-        <div class="terminal-head">
-          <div>
-            <p class="panel-kicker">Bảng lệnh cheatsheet</p>
-            <h3>${selectedTool.name} command board</h3>
-          </div>
-          <button
-            class="button ghost"
-            type="button"
-            data-copy="${encodeURIComponent(allCommands)}"
-          >
-            Copy tất cả
-          </button>
-        </div>
-
-        <div class="terminal-window">
-          <div class="terminal-topbar">
-            <span class="terminal-lights" aria-hidden="true">
-              <i></i><i></i><i></i>
+      <div class="tool-detail-body">
+        <header class="tool-detail-header">
+          <div class="tool-detail-titleblock">
+            <span class="tool-detail-iconframe" aria-hidden="true">
+              <span class="tool-detail-icon">
+                ${iconMap[selectedTool.category] ?? iconMap.cli}
+              </span>
             </span>
-            <span class="terminal-title">${selectedTool.id}</span>
+            <div>
+              <h2>${selectedTool.name}</h2>
+              <p class="tool-detail-handle">${getToolHandle(selectedTool)}</p>
+            </div>
           </div>
 
-          <div class="terminal-body">
-            ${selectedTool.quickCommands
-              .map(
-                (item) => `
-                  <article class="terminal-block">
-                    <div class="terminal-block-head">
-                      <p class="terminal-comment"># ${item.label}</p>
-                      <button
-                        class="terminal-copy"
-                        type="button"
-                        data-copy="${encodeURIComponent(item.command)}"
-                      >
-                        Copy
-                      </button>
-                    </div>
-                    <div class="terminal-command-row">
-                      <span class="terminal-prompt">›</span>
-                      <code class="terminal-command">${item.command}</code>
-                    </div>
-                    <p class="terminal-note">${item.note}</p>
-                  </article>
-                `
-              )
-              .join("")}
+          <div class="tool-detail-actions">
+            <a class="button secondary" href="${selectedTool.sourceUrl}" target="_blank" rel="noreferrer">
+              ${getSourceActionLabel(selectedTool.sourceUrl)}
+            </a>
+            <button class="button primary" type="button" data-copy="${encodeURIComponent(firstCommand)}">
+              ${getPrimaryActionLabel(selectedTool)}
+            </button>
           </div>
+        </header>
+
+        <div class="tool-detail-columns">
+          <article class="tool-detail-card">
+            <div class="tool-detail-card-head">
+              <span class="tool-detail-card-icon" aria-hidden="true">✦</span>
+              <p>Tính năng nổi bật</p>
+            </div>
+            <ul class="tool-feature-list">
+              ${selectedTool.highlights.map((item) => `<li>${item}</li>`).join("")}
+            </ul>
+          </article>
+
+          <article class="tool-detail-card tool-detail-card-plain">
+            <div class="tool-meta-list">
+              ${getQuickInfo(selectedTool).map((item) => `
+                <div class="tool-meta-item">
+                  <span>${item.label}</span>
+                  <strong>${item.value}</strong>
+                </div>
+              `).join("")}
+            </div>
+          </article>
         </div>
-      </section>
 
-      <div class="inspector-footer-grid">
-        <article class="panel-card">
-          <p class="panel-kicker">Keywords</p>
-          <div class="keyword-row">
-            ${selectedTool.keywords.map((item) => `<span class="keyword-chip">${item}</span>`).join("")}
+        <section class="tool-command-panel">
+          <div class="tool-command-head">
+            <span class="tool-command-icon" aria-hidden="true">⌘</span>
+            <h3>Bảng lệnh Cheatsheet</h3>
           </div>
-        </article>
 
-        <article class="panel-card">
-          <p class="panel-kicker">Tool cùng nhóm</p>
-          <div class="related-tool-row">
-            ${
-              relatedTools.length
-                ? relatedTools
-                    .map(
-                      (tool) => `
-                        <button
-                          class="related-tool"
-                          type="button"
-                          data-tool-id="${tool.id}"
-                        >
-                          <strong>${tool.name}</strong>
-                          <span>${tool.host}</span>
-                        </button>
-                      `
-                    )
-                    .join("")
-                : '<p class="empty-inline">Chưa có gợi ý cùng nhóm khả dụng.</p>'
-            }
+          <div class="terminal-window detail-terminal">
+            <div class="terminal-topbar">
+              <span class="terminal-lights" aria-hidden="true">
+                <i></i><i></i><i></i>
+              </span>
+              <span class="terminal-title">-- ${selectedTool.id}</span>
+            </div>
+
+            <div class="terminal-body">
+              ${selectedTool.quickCommands
+                .map(
+                  (item) => `
+                    <article class="terminal-block detail-terminal-block" data-copy="${encodeURIComponent(item.command)}">
+                      <div class="terminal-block-head">
+                        <p class="terminal-comment"># ${item.label}</p>
+                      </div>
+                      <div class="terminal-command-row">
+                        <span class="terminal-prompt">➜</span>
+                        <code class="terminal-command">${item.command}</code>
+                      </div>
+                      <p class="terminal-note">${item.note}</p>
+                    </article>
+                  `
+                )
+                .join("")}
+            </div>
           </div>
-        </article>
+        </section>
       </div>
     </article>
   `;
-
-  selectedToolView.querySelectorAll("[data-tool-id]").forEach((button) => {
-    button.addEventListener("click", () => {
-      selectTool(button.dataset.toolId);
-    });
-  });
-}
-
-function renderWorkflow() {
-  workflowGrid.innerHTML = workflowSteps
-    .map(
-      (step, index) => `
-        <article class="workflow-card">
-          <span class="workflow-index">${String(index + 1).padStart(2, "0")}</span>
-          <div>
-            <h3>${step.title}</h3>
-            <p>${step.body}</p>
-          </div>
-        </article>
-      `
-    )
-    .join("");
-}
-
-function renderDocs() {
-  docsGrid.innerHTML = docsGuide
-    .map(
-      (doc) => `
-        <article class="doc-card">
-          <p class="panel-kicker">${doc.label}</p>
-          <h3>${doc.file}</h3>
-          <p>${doc.description}</p>
-          <a href="./${doc.file}" target="_blank" rel="noreferrer">Mở file</a>
-        </article>
-      `
-    )
-    .join("");
 }
 
 function attachCopyHandlers() {
@@ -522,11 +605,10 @@ function renderApp() {
   const selectedTool = syncSelectedTool(filteredTools);
 
   renderFilters();
+  updateShell(selectedTool, filteredTools);
   renderOverview(filteredTools, selectedTool);
   renderToolGrid(filteredTools, selectedTool);
   renderSelectedTool(selectedTool, filteredTools);
-  renderWorkflow();
-  renderDocs();
   attachCopyHandlers();
 }
 
@@ -536,11 +618,14 @@ searchInput.addEventListener("input", (event) => {
 });
 
 window.addEventListener("hashchange", () => {
-  const hashId = readToolIdFromHash();
-  if (hashId && tools.some((tool) => tool.id === hashId)) {
-    state.selectedToolId = hashId;
-    renderApp();
+  const route = readRouteFromHash();
+  state.view = route.view;
+
+  if (route.toolId && tools.some((tool) => tool.id === route.toolId)) {
+    state.selectedToolId = route.toolId;
   }
+
+  renderApp();
 });
 
 renderApp();

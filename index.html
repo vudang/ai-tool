@@ -20,11 +20,11 @@
     />
     <link rel="stylesheet" href="./src/styles.css" />
   </head>
-  <body>
+  <body class="route-home">
     <div class="app-shell">
       <aside class="sidebar">
         <div class="sidebar-inner">
-          <a class="brand" href="#top">
+          <a class="brand" href="#top" id="brand-home-link">
             <span class="brand-mark">DF</span>
             <span class="brand-copy">
               <strong>DevForge</strong>
@@ -35,7 +35,7 @@
           <a class="button sidebar-cta" href="#tool-detail">+ Tạo Agent Mới</a>
 
           <nav class="sidebar-nav">
-            <a class="sidebar-link active" href="#top">
+            <a class="sidebar-link active" href="#top" data-nav="dashboard" id="nav-dashboard">
               <span class="sidebar-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                   <rect x="3" y="3" width="7" height="7" />
@@ -46,7 +46,7 @@
               </span>
               <span>Dashboard</span>
             </a>
-            <a class="sidebar-link" href="#library">
+            <a class="sidebar-link" href="#library" data-nav="library" id="nav-library">
               <span class="sidebar-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                   <path d="M4 6h16v12H4z" />
@@ -56,7 +56,7 @@
               </span>
               <span>Thư viện CLI</span>
             </a>
-            <a class="sidebar-link" href="#tool-detail">
+            <a class="sidebar-link" href="#top">
               <span class="sidebar-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                   <rect x="4" y="4" width="16" height="16" rx="3" />
@@ -66,7 +66,7 @@
               </span>
               <span>Agent AI</span>
             </a>
-            <a class="sidebar-link" href="#workflow">
+            <a class="sidebar-link" href="#top">
               <span class="sidebar-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                   <path d="M4 7h7v7H4z" />
@@ -80,7 +80,7 @@
           </nav>
 
           <div class="sidebar-meta">
-            <a class="sidebar-link sidebar-link-muted" href="#docs">
+            <a class="sidebar-link sidebar-link-muted" href="./README.md" target="_blank" rel="noreferrer">
               <span class="sidebar-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                   <path d="M7 3h7l5 5v13H7z" />
@@ -108,8 +108,8 @@
       <main class="workspace" id="top">
         <section class="hero-panel">
           <div class="hero-copy">
-            <h1>Trung tâm Công cụ AI của Tôi</h1>
-            <p>
+            <h1 id="hero-title">Trung tâm Công cụ AI của Tôi</h1>
+            <p id="hero-description">
               Quản lý, tìm kiếm và kích hoạt các công cụ dòng lệnh, agent và framework
               được tối ưu hóa cho quy trình phát triển hằng ngày.
             </p>
@@ -135,49 +135,21 @@
 
         <section class="stats-row" id="result-summary"></section>
 
-        <section class="library-panel" id="library">
-          <div class="section-head">
-            <div>
-              <p class="section-label">Library</p>
-              <h2>Thư viện lệnh CLI & cheatsheets</h2>
-            </div>
-            <p class="section-status" id="library-status"></p>
-          </div>
-
-          <div class="tool-grid" id="tool-grid"></div>
-        </section>
-
-        <section class="detail-panel" id="tool-detail">
-          <div id="selected-tool-view"></div>
-        </section>
-
-        <div class="lower-grid">
-          <section class="module-panel" id="workflow">
-            <div class="section-head compact">
+        <div class="content-stage" id="content-stage">
+          <section class="library-panel" id="library">
+            <div class="section-head" id="library-head">
               <div>
-                <p class="section-label">Workflow</p>
-                <h2>Nhịp vận hành để không mất context giữa các tool</h2>
+                <p class="section-label">Library</p>
+                <h2>Thư viện lệnh CLI & cheatsheets</h2>
               </div>
-              <p>
-                Playbook ngắn để chọn host, nạp context, bật skill và khép vòng lặp sau
-                khi hoàn thành task.
-              </p>
+              <p class="section-status" id="library-status"></p>
             </div>
-            <div class="workflow-grid" id="workflow-grid"></div>
+
+            <div class="tool-grid" id="tool-grid"></div>
           </section>
 
-          <section class="module-panel" id="docs">
-            <div class="section-head compact">
-              <div>
-                <p class="section-label">Docs</p>
-                <h2>Bộ tài liệu bàn giao cho agent tiếp theo</h2>
-              </div>
-              <p>
-                Giữ repo dễ tiếp quản: source of truth cho data, shell UI và các quy tắc
-                cập nhật đều nằm ở đây.
-              </p>
-            </div>
-            <div class="docs-grid" id="docs-grid"></div>
+          <section class="detail-panel" id="tool-detail">
+            <div id="selected-tool-view"></div>
           </section>
         </div>
 
