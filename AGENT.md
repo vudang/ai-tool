@@ -42,7 +42,7 @@ Build and maintain a Vietnamese static reference page for AI tools used in daily
 
 ## Design rules
 
-- Keep the current bright editorial-tech direction.
+- Keep the current dark docs-style direction inspired by Claude Platform docs.
 - Do not drift into purple SaaS aesthetics.
 - Do not flatten everything into repetitive equal cards.
 - Headings should stay strong and expressive.

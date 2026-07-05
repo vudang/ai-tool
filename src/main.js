@@ -1,15 +1,15 @@
 import { categories, tools } from "./data/tools.js";
 
 const HOME_COPY = {
-  title: "Trung tâm Công cụ AI của Tôi",
+  title: "Tony-AIHub",
   description:
-    "Quản lý, tìm kiếm và kích hoạt các công cụ dòng lệnh, agent và framework được tối ưu hóa cho quy trình phát triển hằng ngày."
+    "Trung tâm tham chiếu tĩnh để tra nhanh tool, cheatsheet CLI và docs vận hành cho workflow coding hằng ngày."
 };
 
 const DETAIL_COPY = {
-  title: "Thư viện Lệnh CLI & Cheatsheets",
+  title: "Tony-AIHub",
   description:
-    "Khám phá và quản lý các công cụ dòng lệnh được tích hợp sẵn. Lựa chọn công cụ để xem chi tiết tính năng và bảng lệnh tham khảo nhanh."
+    "Mở từng tool để xem docs nguồn, use cases thực tế và bảng lệnh thao tác nhanh trong workflow coding hằng ngày."
 };
 
 const uiCategories = [
@@ -178,7 +178,9 @@ function getFilteredTools() {
         ...tool.keywords,
         ...tool.quickCommands.map((item) => item.label),
         ...tool.quickCommands.map((item) => item.command),
-        ...tool.quickCommands.map((item) => item.note)
+        ...tool.quickCommands.map((item) => item.note),
+        ...(tool.useCases || []).map((item) => item.title),
+        ...(tool.useCases || []).map((item) => item.description)
       ].join(" ")
     );
 
@@ -545,6 +547,25 @@ function renderSelectedTool(selectedTool, filteredTools) {
             </div>
           </article>
         </div>
+
+        <section class="tool-usecases">
+          <div class="tool-usecases-head">
+            <span class="tool-usecases-icon" aria-hidden="true">⟐</span>
+            <h3>Use Cases thực tế</h3>
+          </div>
+          <div class="tool-usecases-grid">
+            ${selectedTool.useCases
+              .map(
+                (item) => `
+                  <article class="usecase-card">
+                    <h4>${item.title}</h4>
+                    <p>${item.description}</p>
+                  </article>
+                `
+              )
+              .join("")}
+          </div>
+        </section>
 
         <section class="tool-command-panel">
           <div class="tool-command-head">

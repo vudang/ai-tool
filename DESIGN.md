@@ -1,53 +1,53 @@
 ---
-name: Cyber-Minimalist Developer HUD
+name: Tony-AIHub Dark Docs
 colors:
-  surface: '#0b1326'
-  surface-dim: '#0b1326'
-  surface-bright: '#31394d'
-  surface-container-lowest: '#060e20'
-  surface-container-low: '#131b2e'
-  surface-container: '#171f33'
-  surface-container-high: '#222a3d'
-  surface-container-highest: '#2d3449'
-  on-surface: '#dae2fd'
-  on-surface-variant: '#b9cacb'
-  inverse-surface: '#dae2fd'
-  inverse-on-surface: '#283044'
-  outline: '#849495'
-  outline-variant: '#3b494b'
-  surface-tint: '#00dbe9'
-  primary: '#dbfcff'
-  on-primary: '#00363a'
-  primary-container: '#00f0ff'
-  on-primary-container: '#006970'
-  inverse-primary: '#006970'
-  secondary: '#4edea3'
-  on-secondary: '#003824'
-  secondary-container: '#00a572'
-  on-secondary-container: '#00311f'
-  tertiary: '#f8f4ff'
-  on-tertiary: '#1000a9'
-  tertiary-container: '#d7d6ff'
-  on-tertiary-container: '#494bd7'
+  surface: '#1c1a19'
+  surface-dim: '#171514'
+  surface-bright: '#2a2724'
+  surface-container-lowest: '#111110'
+  surface-container-low: '#151413'
+  surface-container: '#1c1a19'
+  surface-container-high: '#23211f'
+  surface-container-highest: '#2a2724'
+  on-surface: '#f5efe6'
+  on-surface-variant: '#c7bdae'
+  inverse-surface: '#f5efe6'
+  inverse-on-surface: '#171514'
+  outline: '#93897b'
+  outline-variant: '#4a433c'
+  surface-tint: '#d6bf98'
+  primary: '#d6bf98'
+  on-primary: '#161311'
+  primary-container: '#eadbc0'
+  on-primary-container: '#47351f'
+  inverse-primary: '#977954'
+  secondary: '#b89a73'
+  on-secondary: '#161311'
+  secondary-container: '#7b6140'
+  on-secondary-container: '#f5efe6'
+  tertiary: '#efe6d7'
+  on-tertiary: '#251d15'
+  tertiary-container: '#c2a57a'
+  on-tertiary-container: '#1b150f'
   error: '#ffb4ab'
   on-error: '#690005'
   error-container: '#93000a'
   on-error-container: '#ffdad6'
-  primary-fixed: '#7df4ff'
-  primary-fixed-dim: '#00dbe9'
-  on-primary-fixed: '#002022'
-  on-primary-fixed-variant: '#004f54'
-  secondary-fixed: '#6ffbbe'
-  secondary-fixed-dim: '#4edea3'
-  on-secondary-fixed: '#002113'
-  on-secondary-fixed-variant: '#005236'
-  tertiary-fixed: '#e1e0ff'
-  tertiary-fixed-dim: '#c0c1ff'
-  on-tertiary-fixed: '#07006c'
-  on-tertiary-fixed-variant: '#2f2ebe'
-  background: '#0b1326'
-  on-background: '#dae2fd'
-  surface-variant: '#2d3449'
+  primary-fixed: '#eadbc0'
+  primary-fixed-dim: '#d6bf98'
+  on-primary-fixed: '#161311'
+  on-primary-fixed-variant: '#47351f'
+  secondary-fixed: '#ceb08a'
+  secondary-fixed-dim: '#b89a73'
+  on-secondary-fixed: '#161311'
+  on-secondary-fixed-variant: '#4b3824'
+  tertiary-fixed: '#efe6d7'
+  tertiary-fixed-dim: '#d9c7aa'
+  on-tertiary-fixed: '#251d15'
+  on-tertiary-fixed-variant: '#5b4630'
+  background: '#171514'
+  on-background: '#f5efe6'
+  surface-variant: '#2a2724'
 typography:
   headline-lg:
     fontFamily: Inter
@@ -106,19 +106,19 @@ spacing:
 
 ## Brand & Style
 
-Hệ thống thiết kế này tập trung vào ngôn ngữ **Cyber-Minimalist**, được tối ưu hóa cho các nhà phát triển công cụ AI và CLI. Mục tiêu là tạo ra một môi trường làm việc tập trung cao độ, mang lại cảm giác kỹ thuật, tinh vi nhưng vẫn giữ được sự tinh giản cần thiết.
+Hệ thống thiết kế này tập trung vào ngôn ngữ **Dark Documentation Dashboard**, được tối ưu cho việc tra cứu tool và command liên tục trong terminal workflow. Mục tiêu là giữ cảm giác tài liệu vận hành: tối, tĩnh, rõ thứ bậc, ít nhiễu nhưng vẫn đủ sắc để nhận biết trạng thái active.
 
-Thẩm mỹ chủ đạo kết hợp giữa sự nghiêm ngặt của chủ nghĩa tối giản (Minimalism) với các điểm nhấn công nghệ tương lai. Giao diện sử dụng các lớp nền tối sâu (Deep Charcoal) để giảm mỏi mắt, kết hợp với các hiệu ứng ánh sáng neon tinh tế để chỉ dẫn hành động. Phản hồi cảm xúc hướng tới sự chuyên nghiệp, chính xác và tiên phong.
+Thẩm mỹ chủ đạo nghiêng về dark docs shell tương tự các trang tài liệu sản phẩm hiện đại: nền than ấm, bề mặt trung tính, text ngà sáng và điểm nhấn cát ấm thay cho neon. Phản hồi cảm xúc hướng tới sự điềm tĩnh, chính xác và tập trung dài hơi.
 
 ## Colors
 
 Bảng màu được thiết kế để hoạt động tối ưu trong môi trường ánh sáng thấp, sử dụng độ tương phản cao tại các điểm tương tác.
 
-- **Primary (Electric Blue - #00F0FF):** Màu chủ đạo cho các hành động chính, trạng thái active và các đường dẫn quan trọng. Mang lại cảm giác năng lượng và tốc độ.
-- **Secondary (Emerald Green - #10B981):** Sử dụng cho các chỉ số thành công, trạng thái hoạt động của Agent và các thông báo tích cực.
-- **Background (Deep Charcoal - #0F172A):** Lớp nền chính, tạo độ sâu và sự ổn định cho toàn bộ giao diện.
+- **Primary (Warm Sand - #D6BF98):** Màu chủ đạo cho CTA, active state và các điểm neo cần nhận biết nhanh mà không chói mắt.
+- **Secondary (Muted Bronze - #B89A73):** Dùng cho các chi tiết phụ, metadata nổi bật và nhịp màu trong ribbon hoặc badges.
+- **Background (Charcoal Ink - #171514):** Lớp nền chính, đủ tối để đọc lâu nhưng vẫn có sắc ấm thay vì đen lạnh.
 - **Surface:** Các lớp bề mặt (cards, panels) sử dụng biến thể của màu trung tính với độ sáng nhẹ để phân lớp.
-- **Accents:** Sử dụng các hiệu ứng Glow (tỏa sáng) nhẹ với độ mờ cao cho các phần tử quan trọng nhất.
+- **Accents:** Chỉ dùng wash hoặc glow rất nhẹ, ưu tiên viền, độ sáng bề mặt và chênh sắc thay vì neon rõ nét.
 
 ## Typography
 
@@ -142,11 +142,11 @@ Hệ thống sử dụng **Fluid Grid** dựa trên đơn vị 4px để đảm 
 Trong môi trường tối, chiều sâu không được tạo ra bởi bóng đổ đen truyền thống mà bởi **Tonal Layering** và **Inner Glows**.
 
 - **Surface Levels:** 
-  - Lớp 0 (Base): #0F172A.
-  - Lớp 1 (Cards/Sidebar): #1E293B.
-  - Lớp 2 (Popovers/Tooltips): #334155.
+  - Lớp 0 (Base): #171514.
+  - Lớp 1 (Cards/Sidebar): #1C1A19.
+  - Lớp 2 (Popovers/Tooltips): #2A2724.
 - **Borders:** Sử dụng đường viền mảnh (1px) với độ mờ thấp (10-20% trắng hoặc màu Primary) thay vì bóng đổ nặng.
-- **Active State Elevation:** Khi một phần tử được kích hoạt hoặc hover, sử dụng hiệu ứng "Neon Border" - một đường viền mảnh màu Primary với hiệu ứng drop-shadow cùng màu, độ mờ cực cao (spread thấp, blur trung bình).
+- **Active State Elevation:** Khi một phần tử được kích hoạt hoặc hover, ưu tiên đổi sắc bề mặt, tăng viền và thêm highlight ấm rất nhẹ thay vì neon border mạnh.
 
 ## Shapes
 
@@ -160,7 +160,7 @@ Ngôn ngữ hình khối duy trì sự sắc sảo và chính xác.
 
 - **Buttons:** 
   - *Primary:* Nền màu Primary, chữ đen hoặc tối đậm để tối đa tương phản. 
-  - *Ghost:* Không nền, viền 1px màu Primary, hiệu ứng hover làm sáng viền và thêm glow nhẹ.
+  - *Ghost:* Không nền, viền 1px mờ và hover bằng chênh sắc bề mặt thay vì glow mạnh.
 - **Cards (Feature & Code):** 
   - Nền tối hơn lớp Base một chút hoặc sử dụng viền mờ. 
   - Header của card chứa tiêu đề (Inter) và trạng thái Agent (Status dot). 

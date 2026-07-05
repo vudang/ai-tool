@@ -47,7 +47,21 @@ export const tools = [
         note: "Dùng lại context của thư mục hiện tại."
       }
     ],
-    keywords: ["anthropic", "claude", "terminal", "claude.md", "mcp"]
+    keywords: ["anthropic", "claude", "terminal", "claude.md", "mcp"],
+    useCases: [
+      {
+        title: "Debug lỗi production",
+        description: "Paste stack trace hoặc error log vào session, Claude tự đọc codebase để truy vết nguyên nhân và đề xuất fix cụ thể."
+      },
+      {
+        title: "Refactor module cũ",
+        description: "Yêu cầu Claude tách một function 500+ dòng thành các module nhỏ, có interface rõ ràng và giữ nguyên behavior cũ."
+      },
+      {
+        title: "Viết test tự động",
+        description: "Đưa source file chưa có test, Claude phân tích logic và sinh unit test đầy đủ các edge case."
+      }
+    ]
   },
   {
     id: "codex-cli",
@@ -93,7 +107,21 @@ export const tools = [
         note: "Chuyển sang mode lập kế hoạch trước khi code."
       }
     ],
-    keywords: ["openai", "codex", "agents.md", "skills", "approval", "sandbox"]
+    keywords: ["openai", "codex", "agents.md", "skills", "approval", "sandbox"],
+    useCases: [
+      {
+        title: "Build feature end-to-end",
+        description: "Mô tả yêu cầu feature mới, Codex tự tạo branch, code, viết test và mở PR sẵn sàng để review."
+      },
+      {
+        title: "Review PR tự động",
+        description: "Codex đọc toàn bộ diff, flag các vấn đề về logic, security và style trước khi người review xem."
+      },
+      {
+        title: "Dựng project mới",
+        description: "Khởi tạo boilerplate với ESLint, Prettier, CI pipeline và cấu trúc thư mục chuẩn chỉ trong một câu lệnh."
+      }
+    ]
   },
   {
     id: "understand-anything",
@@ -139,7 +167,21 @@ export const tools = [
         note: "Đi sâu vào file/hàm cụ thể."
       }
     ],
-    keywords: ["knowledge graph", "dashboard", "onboarding", "diff", "context"]
+    keywords: ["knowledge graph", "dashboard", "onboarding", "diff", "context"],
+    useCases: [
+      {
+        title: "Onboarding dev mới",
+        description: "Dev mới vào team dùng knowledge graph để hiểu kiến trúc tổng thể, các module chính và mối quan hệ giữa chúng trong vài giờ thay vì vài tuần."
+      },
+      {
+        title: "Phân tích impact trước refactor",
+        description: "Trước khi sửa một module, dùng graph để xem tất cả code phụ thuộc vào nó — tránh broken dependency."
+      },
+      {
+        title: "Audit documentation gap",
+        description: "Quét toàn bộ codebase để tìm function/class thiếu comment, README lỗi thời hoặc interface không được document."
+      }
+    ]
   },
   {
     id: "hermes-agent",
@@ -185,7 +227,17 @@ export const tools = [
         note: "Dùng Nous Portal để đi nhanh hơn."
       }
     ],
-    keywords: ["gateway", "provider", "portal", "multi-tool", "subagent"]
+    keywords: ["gateway", "provider", "portal", "multi-tool", "subagent"],
+    useCases: [
+      {
+        title: "Dựng chatbot nội bộ",
+        description: "Tích hợp hermes-agent với Telegram/Discord để team có thể hỏi đáp về codebase, deployment status hoặc log ngay trong chat."
+      },
+      {
+        title: "Pipeline tự động hóa",
+        description: "Cấu hình nhiều sub-agent xử lý song song các bước: lint → test → build → deploy, mỗi bước bởi một provider/tool khác nhau."
+      }
+    ]
   },
   {
     id: "free-claude-code",
@@ -226,7 +278,17 @@ export const tools = [
         note: "Launch Codex với provider config tạm thời."
       }
     ],
-    keywords: ["proxy", "routing", "provider", "admin ui", "fcc"]
+    keywords: ["proxy", "routing", "provider", "admin ui", "fcc"],
+    useCases: [
+      {
+        title: "Code offline với model local",
+        description: "Route Claude Code qua Ollama hoặc LM Studio khi làm việc trên máy bay, vùng không có Internet hoặc dự án nhạy cảm không muốn gửi code ra ngoài."
+      },
+      {
+        title: "Giảm chi phí API",
+        description: "Dùng OpenRouter để chọn model rẻ hơn cho task đơn giản (như format code, viết comment), chỉ dùng model mạnh cho task phức tạp."
+      }
+    ]
   },
   {
     id: "rtk",
@@ -272,7 +334,17 @@ export const tools = [
         note: "Chạy command qua RTK ngay cả khi chưa có hook."
       }
     ],
-    keywords: ["token savings", "rewrite", "hook", "analytics", "shell"]
+    keywords: ["token savings", "rewrite", "hook", "analytics", "shell"],
+    useCases: [
+      {
+        title: "Làm việc với monorepo",
+        description: "Trong monorepo 50+ package, output của `git status`, `ls`, `rg` cực lớn. RTK compact output trước khi gửi vào context, tiết kiệm 60-90% token."
+      },
+      {
+        title: "Giảm chi phí hằng ngày",
+        description: "Bật RTK hook cho Claude Code, mỗi command shell tự động được rewrite. Dùng `rtk gain --history` để xem mức tiết kiệm thực tế theo ngày."
+      }
+    ]
   },
   {
     id: "agent-skills",
@@ -308,7 +380,17 @@ export const tools = [
         note: "Import thẳng thư mục skills."
       }
     ],
-    keywords: ["skills", "playbook", "progressive disclosure", "best practices"]
+    keywords: ["skills", "playbook", "progressive disclosure", "best practices"],
+    useCases: [
+      {
+        title: "Chuẩn hóa review code",
+        description: "Áp dụng skill review cho mọi PR trong team — mỗi lần review đều theo cùng playbook: correctness → security → performance → readability."
+      },
+      {
+        title: "Performance audit định kỳ",
+        description: "Trước mỗi release, dùng webperf skill để audit Core Web Vitals, bundle size và rendering performance theo chuẩn có sẵn."
+      }
+    ]
   },
   {
     id: "agency-agents",
@@ -344,7 +426,17 @@ export const tools = [
         note: "Rà roster trước khi cài."
       }
     ],
-    keywords: ["persona", "specialist", "division", "install", "roster"]
+    keywords: ["persona", "specialist", "division", "install", "roster"],
+    useCases: [
+      {
+        title: "Review frontend chuyên sâu",
+        description: "Gọi UI/UX specialist agent để review component library — kiểm tra tính nhất quán, accessibility, responsive và animation."
+      },
+      {
+        title: "Security audit trước release",
+        description: "Kích hoạt security division agent để rà các lỗ hổng phổ biến (XSS, injection, exposed secrets) trước khi merge lên production."
+      }
+    ]
   },
   {
     id: "gstack",
@@ -390,7 +482,17 @@ export const tools = [
         note: "Rà UI/flow khi có URL staging."
       }
     ],
-    keywords: ["qa", "plan review", "browser", "ship", "release", "opinionated"]
+    keywords: ["qa", "plan review", "browser", "ship", "release", "opinionated"],
+    useCases: [
+      {
+        title: "Plan feature với góc nhìn CEO",
+        description: "Trước khi code, chạy `/office-hours` để bóc tách requirement, rồi `/plan-ceo-review` để kiểm tra độ sắc của idea từ góc nhìn kinh doanh."
+      },
+      {
+        title: "QA tự động staging",
+        description: "Sau khi deploy lên staging, chạy `/qa` với URL staging để agent tự động kiểm tra UI, flow và báo cáo các vấn đề tìm thấy."
+      }
+    ]
   },
   {
     id: "karpathy-skills",
@@ -426,7 +528,17 @@ export const tools = [
         note: "Keyword mnemonic khi review prompt cho agent."
       }
     ],
-    keywords: ["guidelines", "claude.md", "minimal changes", "goal-driven"]
+    keywords: ["guidelines", "claude.md", "minimal changes", "goal-driven"],
+    useCases: [
+      {
+        title: "Build MVP không overengineer",
+        description: "Khi build tính năng mới, guideline buộc agent tập trung vào goal chính, tránh thêm abstraction không cần thiết và luôn hỏi 'cách đơn giản nhất là gì?'."
+      },
+      {
+        title: "Code review ít assumption",
+        description: "Agent phải nêu rõ trade-off của từng đề xuất, không assume requirement và buộc verify bằng test case cụ thể trước khi kết luận."
+      }
+    ]
   },
   {
     id: "superpowers",
@@ -462,7 +574,17 @@ export const tools = [
         note: "Native plugin install."
       }
     ],
-    keywords: ["methodology", "tdd", "plans", "review", "worktrees", "workflow"]
+    keywords: ["methodology", "tdd", "plans", "review", "worktrees", "workflow"],
+    useCases: [
+      {
+        title: "Refactor module phức tạp với TDD",
+        description: "Trước khi chạm vào legacy code, superpowers tạo worktree riêng, viết test cho behavior hiện tại, refactor, rồi verify test vẫn pass."
+      },
+      {
+        title: "Build feature có checkpoint rõ ràng",
+        description: "Đi qua đủ bước: brainstorm → plan → code (TDD) → self-review → final review. Mỗi bước có artifact rõ ràng, không bỏ sót góc nhìn nào."
+      }
+    ]
   }
 ];
 

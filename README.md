@@ -1,4 +1,4 @@
-# AI Tools Hub
+# Tony-AIHub
 
 Trang web tiếng Việt để gom các công cụ AI đang dùng trong workflow coding hằng ngày vào một chỗ: mô tả ngắn, điểm mạnh, command cheatsheet và guide cho agent tiếp quản repo.
 
@@ -75,7 +75,7 @@ Nếu cần thêm tool mới:
 
 ## Quy ước giao diện
 
-- Visual direction: sáng, editorial-tech, không dùng tím làm màu chủ đạo.
+- Visual direction: tối, docs-style, tương phản mềm kiểu operator dashboard; không dùng tím làm màu chủ đạo.
 - Typography chính: `Space Grotesk` cho heading, `IBM Plex Sans` cho body, `IBM Plex Mono` cho code.
 - Thẻ command phải copy được bằng nút `Copy`.
 - Không biến trang thành danh sách card đồng dạng vô hồn; giữ nhịp giữa hero, library, command center và docs.
