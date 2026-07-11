@@ -4,7 +4,8 @@ export const categories = [
   { id: "context", label: "Context" },
   { id: "skills", label: "Skills" },
   { id: "automation", label: "Automation" },
-  { id: "multi-agent", label: "Multi-agent" }
+  { id: "multi-agent", label: "Multi-agent" },
+  { id: "learning", label: "Học tập" }
 ];
 
 export const tools = [
@@ -643,6 +644,109 @@ export const tools = [
       {
         title: "Build feature có checkpoint rõ ràng",
         description: "Đi qua đủ bước: brainstorm → plan → code (TDD) → self-review → final review. Mỗi bước có artifact rõ ràng, không bỏ sót góc nhìn nào."
+      }
+    ]
+  },
+  {
+    id: "ui-ux-pro-max-skill",
+    name: "UI UX Pro Max",
+    host: "nextlevelbuilder",
+    category: "skills",
+    cadence: "Khi cần dựng UI/UX nhanh, đúng chuẩn ngành",
+    priority: "standard",
+    accent: "ink",
+    summary:
+      "Skill design intelligence giúp agent tự sinh design system (pattern, màu, font, hiệu ứng, anti-pattern) theo đúng ngành sản phẩm trước khi code UI.",
+    bestFor: "Landing page, dashboard hoặc app UI cần đúng phong cách ngành thay vì đoán màu/font thủ công.",
+    sourceUrl: "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+    highlights: [
+      "161 reasoning rule theo ngành, 67 UI style, 161 color palette và 57 font pairing để sinh design system hoàn chỉnh chỉ từ một câu mô tả sản phẩm.",
+      "Hỗ trợ 22 tech stack (React, Next.js, Vue, SwiftUI, Flutter, Laravel...) nên code sinh ra bám đúng stack đang dùng.",
+      "Có pre-delivery checklist chống anti-pattern: contrast tối thiểu, cursor-pointer, focus state, prefers-reduced-motion, breakpoint responsive."
+    ],
+    quickCommands: [
+      {
+        label: "Add marketplace cho Claude",
+        command: "/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill",
+        note: "Thêm nguồn plugin trước khi cài."
+      },
+      {
+        label: "Cài skill cho Claude",
+        command: "/plugin install ui-ux-pro-max@ui-ux-pro-max-skill",
+        note: "Chạy sau khi đã add marketplace."
+      },
+      {
+        label: "Cài qua CLI cho host khác",
+        command: "npm install -g ui-ux-pro-max-cli && uipro init --ai codex",
+        note: "CLI hỗ trợ nhiều host: cursor, gemini, windsurf, kiro..."
+      },
+      {
+        label: "Gợi ý prompt kích hoạt skill",
+        command: "Build a landing page for my SaaS product",
+        note: "Đây là mnemonic prompt tự nhiên, không phải shell command — skill tự activate khi nhận yêu cầu UI/UX."
+      }
+    ],
+    keywords: ["ui/ux", "design system", "design tokens", "color palette", "typography", "reasoning rules"],
+    useCases: [
+      {
+        title: "Dựng landing page theo ngành cụ thể",
+        description: "Mô tả sản phẩm (spa, SaaS, fintech...), skill tự chọn pattern, màu, font và anti-pattern cần tránh đúng ngành đó rồi mới generate code."
+      },
+      {
+        title: "Đồng bộ design system nhiều stack",
+        description: "Khi team dùng nhiều framework (React, Vue, SwiftUI...), skill áp cùng bộ token và rule vào từng stack, giữ nhất quán UI giữa các platform."
+      }
+    ]
+  },
+  {
+    id: "ai-for-beginners",
+    name: "AI for Beginners",
+    host: "Microsoft",
+    category: "learning",
+    cadence: "Khi cần xây nền tảng AI trước khi dùng agent/LLM",
+    priority: "standard",
+    accent: "teal",
+    summary:
+      "Curriculum miễn phí 12 tuần, 24 bài của Microsoft dạy nền tảng AI — từ symbolic AI, neural network đến CV, NLP, GAN, RL, multi-agent và AI ethics.",
+    bestFor: "Onboard người mới vào mảng AI/deep learning, hoặc tra cứu nhanh lý thuyết đứng sau một kỹ thuật cụ thể.",
+    sourceUrl: "https://github.com/microsoft/AI-For-Beginners",
+    highlights: [
+      "24 bài học chia theo 12 tuần, mỗi bài có notebook thực hành song song PyTorch và TensorFlow/Keras.",
+      "Có lab và quiz đi kèm hầu hết bài để tự kiểm tra trước khi qua bài tiếp theo.",
+      "Dịch sẵn 50+ ngôn ngữ (có tiếng Việt) nên dùng được để đào tạo lại team, không chỉ tự học."
+    ],
+    quickCommands: [
+      {
+        label: "Clone repo đầy đủ",
+        command: "git clone https://github.com/microsoft/AI-For-Beginners.git",
+        note: "Kèm 50+ bản dịch nên khá nặng."
+      },
+      {
+        label: "Clone gọn, bỏ qua bản dịch",
+        command:
+          "git clone --filter=blob:none --sparse https://github.com/microsoft/AI-For-Beginners.git && cd AI-For-Beginners && git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'",
+        note: "Nhẹ hơn nhiều, đủ dùng nếu chỉ học bản tiếng Anh."
+      },
+      {
+        label: "Mở một notebook bài học",
+        command: "jupyter notebook lessons/3-NeuralNetworks/03-Perceptron/Perceptron.ipynb",
+        note: "Ví dụ mở bài Perceptron; đổi path theo bài đang học."
+      },
+      {
+        label: "Cấu trúc khóa học",
+        command: "12 tuần / 24 bài / mỗi bài có lesson + notebook + lab + quiz",
+        note: "Đây là mnemonic tóm tắt lộ trình, không phải shell command."
+      }
+    ],
+    keywords: ["ai curriculum", "deep learning", "pytorch", "tensorflow", "computer vision", "nlp", "microsoft learn", "khóa học"],
+    useCases: [
+      {
+        title: "Onboard dev mới vào mảng AI",
+        description: "Cho dev chưa có nền AI đi qua 24 bài theo tuần, mỗi bài có notebook, lab và quiz để tự kiểm tra trước khi nhận task AI thật."
+      },
+      {
+        title: "Tra cứu nhanh một chủ đề cụ thể",
+        description: "Cần hiểu nhanh Transformer, GAN hay Reinforcement Learning để review code hoặc thiết kế agent, mở thẳng lesson tương ứng thay vì đọc paper gốc."
       }
     ]
   }

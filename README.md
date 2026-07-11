@@ -113,3 +113,5 @@ Nội dung được chuẩn hóa từ docs/README chính thức của:
 - gstack
 - andrej-karpathy-skills
 - superpowers
+- ui-ux-pro-max-skill
+- AI for Beginners (Microsoft)

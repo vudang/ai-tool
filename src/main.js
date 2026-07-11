@@ -16,7 +16,8 @@ const uiCategories = [
   { id: "all", label: "Tất cả" },
   { id: "cli", label: "CLI Tools" },
   { id: "agents", label: "Agents" },
-  { id: "frameworks", label: "Frameworks" }
+  { id: "frameworks", label: "Frameworks" },
+  { id: "learning", label: "Học tập" }
 ];
 
 const state = {
@@ -34,7 +35,8 @@ const categoryDisplayLabels = {
   automation: "Automation",
   "multi-agent": "Agents",
   agents: "Agents",
-  frameworks: "Frameworks"
+  frameworks: "Frameworks",
+  learning: "Học tập"
 };
 
 const iconMap = {
@@ -71,6 +73,12 @@ const iconMap = {
       <circle cx="15" cy="16.5" r="2.5"></circle>
       <path d="M10 10.8l4.2-1.5"></path>
       <path d="M9.8 11.8l3.9 3.3"></path>
+    </svg>
+  `,
+  learning: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M3.5 8.5L12 4.5l8.5 4-8.5 4-8.5-4z"></path>
+      <path d="M7 10.5v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4.5"></path>
     </svg>
   `
 };
