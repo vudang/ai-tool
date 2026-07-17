@@ -115,3 +115,4 @@ Nội dung được chuẩn hóa từ docs/README chính thức của:
 - superpowers
 - ui-ux-pro-max-skill
 - AI for Beginners (Microsoft)
+- Graphify

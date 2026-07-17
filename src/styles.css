@@ -1332,7 +1332,7 @@ body.route-detail .site-footer {
 
 .tool-meta-item {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) fit-content(60%);
   gap: 12px;
   padding: 18px 0;
   border-bottom: 1px solid rgba(var(--primary-rgb), 0.12);
@@ -1358,10 +1358,12 @@ body.route-detail .site-footer {
 }
 
 .tool-meta-item strong {
+  min-width: 0;
   color: var(--primary);
   font-weight: 600;
   font-family: "JetBrains Mono", monospace;
   text-align: right;
+  overflow-wrap: break-word;
 }
 
 .tool-command-panel {

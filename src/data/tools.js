@@ -699,6 +699,62 @@ export const tools = [
     ]
   },
   {
+    id: "graphify",
+    name: "Graphify",
+    host: "Graphify Labs",
+    category: "context",
+    cadence: "Mỗi khi vào repo lạ hoặc cần tra cứu thay vì đọc file",
+    priority: "standard",
+    accent: "teal",
+    summary:
+      "Skill cho AI coding assistant (Claude Code, Codex, Cursor, Gemini CLI...) biến một thư mục code, schema SQL, docs, PDF, ảnh hay video thành knowledge graph có thể query thay vì phải grep từng file.",
+    bestFor: "Tra cứu codebase lạ bằng query/path/explain thay vì đọc file thủ công, gom code + docs + schema vào cùng một graph.",
+    sourceUrl: "https://github.com/Graphify-Labs/graphify",
+    highlights: [
+      "Code được parse local bằng tree-sitter AST — không cần LLM, không gửi code ra ngoài; chỉ phần docs/PDF/ảnh/video mới cần model để làm semantic pass.",
+      "Mỗi cạnh trong graph được gắn nhãn EXTRACTED (đọc trực tiếp từ source) hoặc INFERRED (graphify suy luận ra), nên biết rõ đâu là chắc chắn, đâu là suy đoán.",
+      "Không phải vector index — là graph thật để truy vết: hỏi query, tìm đường đi giữa hai khái niệm hoặc giải thích một node cụ thể."
+    ],
+    quickCommands: [
+      {
+        label: "Cài CLI",
+        command: "uv tool install graphifyy",
+        note: "Có thể dùng pipx install graphifyy thay thế."
+      },
+      {
+        label: "Đăng ký skill cho AI assistant",
+        command: "graphify install",
+        note: "Mặc định cài cho Claude Code; thêm --platform để chọn host khác."
+      },
+      {
+        label: "Build graph cho project hiện tại",
+        command: "/graphify .",
+        note: "Gõ trong AI assistant sau khi cài skill; Codex dùng $graphify thay vì dấu /."
+      },
+      {
+        label: "Hỏi một câu về codebase",
+        command: 'graphify query "How does auth work?"',
+        note: "Trả về đúng subgraph liên quan thay vì đọc toàn bộ report."
+      },
+      {
+        label: "Truy vết đường đi giữa 2 khái niệm",
+        command: 'graphify path "FastAPI" "ModelField"',
+        note: "In ra từng hop nối giữa hai node trong graph."
+      }
+    ],
+    keywords: ["knowledge graph", "tree-sitter", "code map", "query", "graph.json", "context", "skill"],
+    useCases: [
+      {
+        title: "Onboard vào repo lạ",
+        description: "Chạy /graphify . để build graph.html và GRAPH_REPORT.md, xem god nodes và communities để nắm kiến trúc tổng thể trước khi đọc code chi tiết."
+      },
+      {
+        title: "Trả lời câu hỏi về codebase mà không cần đọc hết file",
+        description: "Dùng graphify query hoặc graphify explain để lấy đúng subgraph liên quan, thay vì grep hoặc mở từng file thủ công."
+      }
+    ]
+  },
+  {
     id: "ai-for-beginners",
     name: "AI for Beginners",
     host: "Microsoft",
