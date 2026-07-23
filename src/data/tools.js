@@ -805,6 +805,57 @@ export const tools = [
         description: "Cần hiểu nhanh Transformer, GAN hay Reinforcement Learning để review code hoặc thiết kế agent, mở thẳng lesson tương ứng thay vì đọc paper gốc."
       }
     ]
+  },
+  {
+    id: "ai-engineering-from-scratch",
+    name: "AI Engineering From Scratch",
+    host: "rohitg00",
+    category: "learning",
+    cadence: "Khi cần lộ trình đầy đủ từ toán nền tới build agent production",
+    priority: "standard",
+    accent: "teal",
+    summary:
+      "Curriculum mã nguồn mở 20 phase, 503 bài, ~320 giờ — đi từ toán nền tảng, ML, deep learning qua CV/NLP/speech, LLM from scratch, đến agent engineering và multi-agent swarm, mỗi bài đều tự code lại thuật toán trước khi dùng framework.",
+    bestFor: "Xây nền AI engineering thật sự (không chỉ gọi API), hoặc tra cứu nhanh một phase cụ thể như agent engineering, LLM from scratch khi cần hiểu sâu trước khi thiết kế hệ thống.",
+    sourceUrl: "https://github.com/rohitg00/ai-engineering-from-scratch",
+    highlights: [
+      "20 phase xếp tuần tự từ math foundations, ML/deep learning core, CV/NLP/speech, transformer, generative AI, RL, đến LLM engineering, agent engineering và multi-agent swarm; phase cuối có 17 capstone project.",
+      "Mỗi bài theo cấu trúc 6 nhịp cố định: motto → problem → concept → build it → use it → ship it, dùng Python, TypeScript, Rust và Julia tùy phase.",
+      "Đi kèm 388 skill và 99 prompt cài trực tiếp cho Claude/Cursor/Codex qua npx skills, không chỉ đọc lý thuyết suông."
+    ],
+    quickCommands: [
+      {
+        label: "Clone repo",
+        command: "git clone https://github.com/rohitg00/ai-engineering-from-scratch.git",
+        note: "Repo đầy đủ 20 phase, có thể chỉ chạy từng phase cần dùng."
+      },
+      {
+        label: "Chạy thử một bài",
+        command: "python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py",
+        note: "Ví dụ bài đầu tiên; đổi path theo phase/lesson đang học."
+      },
+      {
+        label: "Cài toàn bộ skill/prompt cho AI assistant",
+        command: "npx skills add rohitg00/ai-engineering-from-scratch",
+        note: "Thêm --phase 14 để chỉ cài skill của một phase (vd. agent engineering)."
+      },
+      {
+        label: "Kiểm tra trình độ để bắt đầu đúng phase",
+        command: "/find-your-level",
+        note: "Gõ trong Claude/Cursor/Codex/Hermes sau khi cài skill, không phải shell command."
+      }
+    ],
+    keywords: ["ai engineering", "llm from scratch", "agent engineering", "deep learning", "curriculum", "khóa học", "rust", "pytorch", "mcp"],
+    useCases: [
+      {
+        title: "Học AI engineering từ gốc trước khi build agent production",
+        description: "Đi từ phase toán nền, ML, deep learning core đến LLM engineering và agent engineering, mỗi bài tự code lại thuật toán trước khi dùng framework có sẵn."
+      },
+      {
+        title: "Tra cứu nhanh một chủ đề để thiết kế hệ thống",
+        description: "Cần hiểu sâu multi-agent swarm, MCP hay LLM from scratch trước khi review/kiến trúc một hệ thống thật, mở thẳng phase liên quan thay vì đọc paper rải rác."
+      }
+    ]
   }
 ];
 
